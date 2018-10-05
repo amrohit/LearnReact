@@ -6,29 +6,21 @@ import person from "./Person/Person";
 class App extends Component {
   state = {
     persons: [
-      { id: "dr", name: "Rohit", age: 26 },
-      { id: "34", name: "Mohit", age: 20 },
-      { id: "ye", name: "Khusi", age: 18 }
+      { name: "Rohit", age: 26 },
+      { name: "Mohit", age: 20 },
+      { name: "Khusi", age: 18 }
     ],
     otherState: "some other state",
     showPersons: true
   };
 
-  nameChangeHandler = (event, id) => {
-    const personIndex = this.state.persons.findIndex(p => {
-      return p.id === id;
-    });
-    //const person = this.state.persons[personIndex]; dont do this
-    const person = {
-      ...this.state.persons[personIndex]
-    };
-    //or
-    const newPerson = Object.assign({}, this.state.persons[personIndex]);
-    person.name = event.target.value;
-    const persons = [...this.state.persons];
-    persons[personIndex] = person;
+  nameChangeHandler = event => {
     this.setState({
-      persons: persons
+      persons: [
+        { name: "Rohit", age: 26 },
+        { name: event.target.value, age: 20 },
+        { name: "Khusi", age: 18 }
+      ]
     });
   };
 
@@ -70,8 +62,6 @@ class App extends Component {
                 click={() => this.deletePersonHandler(index)}
                 name={person.name}
                 age={person.age}
-                key={person.id}
-                changed={event => this.nameChangeHandler(event, person.id)}
               />
             );
           })}
